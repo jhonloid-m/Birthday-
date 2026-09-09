@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="theme-color" content="#ffd8e6" />
+<title>For Casey — Happy Birthday ♡</title>
+<style>
+  :root{
+    --pink:#ff9fbd;
+    --pink2:#ffd8e6;
+    --rose:#f06b95;
+    --cream:#fff8f2;
+    --brown:#795548;
+    --dark:#392b32;
+    --white:#fff;
+    --shadow:0 18px 50px rgba(87,47,62,.14);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    min-height:100vh;
+    font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    background:
+      radial-gradient(circle at 20% 10%, rgba(255,255,255,.95) 0 4%, transparent 5%),
+      radial-gradient(circle at 80% 20%, rgba(255,255,255,.8) 0 3%, transparent 4%),
+      linear-gradient(145deg,#ffeaf2,#fff8f2 45%,#ffe5ef);
+    color:var(--dark);
+    overflow-x:hidden;
+  }
+  button{font:inherit}
+  .app{position:relative;min-height:100vh;overflow:hidden}
+  .screen{
+    display:none;
+    min-height:100vh;
+    padding:28px 18px 34px;
+    position:relative;
+    align-items:center;
+    justify-content:center;
+  }
+  .screen.active{display:flex;animation:fadeIn .6s ease both}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .card{
+    width:min(720px,100%);
+    background:rgba(255,255,255,.79);
+    backdrop-filter:blur(12px);
+    border:1px solid rgba(255,255,255,.9);
+    box-shadow:var(--shadow);
+    border-radius:30px;
+    padding:30px 22px;
+    text-align:center;
+    position:relative;
+    z-index:2;
+  }
+  .eyebrow{
+    display:inline-flex;gap:7px;align-items:center;
+    padding:8px 13px;border-radius:999px;
+    background:#fff0f6;color:#a74b70;font-weight:800;font-size:.78rem;
+    letter-spacing:.08em;text-transform:uppercase;
+  }
+  h1,h2{font-family:Georgia,"Times New Roman",serif;line-height:1.05;margin:16px 0 10px}
+  h1{font-size:clamp(2.7rem,10vw,5.3rem)}
+  h2{font-size:clamp(2rem,7vw,3.3rem)}
+  p{line-height:1.65;margin:8px auto;max-width:58ch}
+  .name{color:#ec6591}
+  .sub{color:#755c67}
+  .btn{
+    border:0;cursor:pointer;
+    padding:13px 22px;border-radius:999px;
+    background:linear-gradient(135deg,#ff8eb1,#f06b95);
+    color:#fff;font-weight:800;
+    box-shadow:0 10px 24px rgba(240,107,149,.28);
+    transition:transform .18s ease,box-shadow .18s ease;
+    margin-top:16px;
+  }
+  .btn:hover{transform:translateY(-2px);box-shadow:0 13px 28px rgba(240,107,149,.35)}
+  .btn:active{transform:scale(.97)}
+  .btn.secondary{background:#fff;color:#a34b6e;border:1px solid #f4bfd0;box-shadow:0 8px 20px rgba(120,80,96,.08)}
+  .hero-bears{height:150px;position:relative;margin:10px auto 0;max-width:480px}
+  .bear{
+    position:absolute;font-size:clamp(4rem,17vw,6.8rem);
+    filter:drop-shadow(0 9px 8px rgba(84,53,42,.13));
+    user-select:none;
+  }
+  .bear.one{left:14%;bottom:0;animation:bearBounce 2.4s ease-in-out infinite}
+  .bear.two{right:14%;bottom:4px;animation:bearBounce 2.4s .4s ease-in-out infinite}
+  .bear.tiny{font-size:2.1rem;animation:float 3s ease-in-out infinite}
+  @keyframes bearBounce{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-15px) rotate(2deg)}}
+  @keyframes float{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-13px) rotate(4deg)}}
+  .sparkles{position:absolute;inset:0;pointer-events:none}
+  .spark{position:absolute;color:#ef8eac;opacity:.7;animation:spark 3s linear infinite}
+  .spark:nth-child(1){left:6%;top:18%;animation-delay:.2s}
+  .spark:nth-child(2){right:8%;top:35%;animation-delay:1.1s}
+  .spark:nth-child(3){left:18%;bottom:20%;animation-delay:1.9s}
+  .spark:nth-child(4){right:18%;bottom:15%;animation-delay:2.4s}
+  @keyframes spark{0%,100%{transform:scale(.75);opacity:.35}50%{transform:scale(1.25);opacity:1}}
+
+  /* jokes */
+  .progress{display:flex;gap:7px;justify-content:center;margin:15px 0 4px}
+  .dot{width:26px;height:7px;border-radius:9px;background:#f5d6df}
+  .dot.on{background:#ef83a5}
+  .joke-stage{perspective:1200px;margin:20px auto;max-width:470px}
+  .joke-card{
+    min-height:270px;position:relative;transform-style:preserve-3d;
+    transition:transform .65s cubic-bezier(.2,.7,.2,1);cursor:pointer;
+  }
+  .joke-card.flipped{transform:rotateY(180deg)}
+  .face{
+    position:absolute;inset:0;backface-visibility:hidden;
+    border-radius:26px;background:#fffafc;border:1px solid #f2d8e1;
+    padding:32px 24px;display:flex;flex-direction:column;
+    justify-content:center;align-items:center;box-shadow:0 12px 32px rgba(90,55,68,.09)
+  }
+  .back{transform:rotateY(180deg);background:linear-gradient(135deg,#fff2f6,#fff9f5)}
+  .mini{font-size:.83rem;color:#a07182;font-weight:700}
+  .answer{font-size:1.35rem;font-weight:850;color:#c9577d}
+  .hint{font-size:.82rem;color:#9d808b;margin-top:13px}
+
+  /* game */
+  .game-wrap{max-width:650px}
+  .stats{display:flex;justify-content:center;gap:11px;flex-wrap:wrap;margin:10px 0 14px}
+  .pill{background:#fff;border:1px solid #f0d4de;padding:8px 13px;border-radius:999px;font-weight:800;font-size:.9rem}
+  #game{
+    height:420px;position:relative;overflow:hidden;border-radius:28px;
+    background:linear-gradient(#ffeef5,#fffaf2);
+    border:2px solid #f4cedb;
+    box-shadow:inset 0 0 0 8px rgba(255,255,255,.4);
+    touch-action:manipulation;
+  }
+  .cloud{position:absolute;color:#fff;font-size:3rem;opacity:.7;animation:cloud 12s linear infinite}
+  .cloud.c1{top:8%;left:-10%}.cloud.c2{top:25%;left:-25%;animation-duration:17s;animation-delay:3s}
+  @keyframes cloud{to{transform:translateX(130vw)}}
+  .game-bear{
+    position:absolute;font-size:3.3rem;cursor:pointer;user-select:none;
+    animation:wobble .75s ease-in-out infinite alternate;
+    filter:drop-shadow(0 6px 5px rgba(86,54,44,.15));
+  }
+  @keyframes wobble{from{transform:rotate(-7deg) scale(1)}to{transform:rotate(7deg) scale(1.06)}}
+  .pop{position:absolute;font-weight:900;color:#df5d88;animation:pop 650ms ease forwards;pointer-events:none}
+  @keyframes pop{0%{opacity:0;transform:translateY(10px) scale(.7)}25%{opacity:1}100%{opacity:0;transform:translateY(-45px) scale(1.1)}}
+  .win-message{display:none;margin-top:16px;padding:20px;border-radius:22px;background:#fff;border:1px solid #f4d6df}
+  .win-message.show{display:block;animation:fadeIn .5s ease both}
+
+  /* final */
+  .letter{max-width:600px;margin:15px auto 0;text-align:left;background:#fffdfd;border:1px solid #f2d8e1;border-radius:23px;padding:22px}
+  .letter p{margin:0 0 13px}
+  .signature{font-family:cursive;font-size:1.35rem;color:#d65c83;text-align:right}
+  .cake-area{margin:26px auto 0;height:280px;position:relative;max-width:420px;display:flex;align-items:flex-end;justify-content:center}
+  .cake{position:relative;width:220px;height:112px;background:linear-gradient(#ffb4ca,#f58eae);border-radius:18px 18px 22px 22px;box-shadow:0 15px 25px rgba(125,76,92,.14)}
+  .cake:before{content:"";position:absolute;left:0;right:0;top:-22px;height:34px;background:#fff4f7;border-radius:50%;box-shadow:0 5px 0 #efb7c8}
+  .cake:after{content:"♡ ♡ ♡";position:absolute;left:0;right:0;top:36px;color:#fff;font-size:1.25rem;letter-spacing:25px;padding-left:16px}
+  .plate{position:absolute;bottom:-18px;width:280px;height:20px;background:#fff;border:2px solid #efcfd9;border-radius:50%}
+  .candle{position:absolute;left:50%;top:-78px;transform:translateX(-50%);width:20px;height:65px;background:repeating-linear-gradient(135deg,#fff 0 7px,#f28caf 7px 14px);border-radius:7px}
+  .flame{
+    position:absolute;left:50%;top:-33px;transform:translateX(-50%);
+    width:21px;height:31px;border-radius:50% 50% 55% 55% / 65% 65% 35% 35%;
+    background:radial-gradient(circle at 50% 72%,#fff8bd 0 24%,#ffd15a 25% 56%,#ff8e61 57% 100%);
+    box-shadow:0 0 22px 8px rgba(255,177,79,.45);
+    transform-origin:50% 90%;
+    animation:flame 0.42s ease-in-out infinite alternate;
+  }
+  .flame.out{animation:extinguish .7s ease forwards}
+  @keyframes flame{from{transform:translateX(-50%) rotate(-4deg) scale(.95)}to{transform:translateX(-50%) rotate(5deg) scale(1.08)}}
+  @keyframes extinguish{0%{transform:translateX(-50%) scale(1)}40%{transform:translateX(-50%) scale(1.4,.7)}100%{transform:translateX(-50%) translateY(-10px) scale(0);opacity:0}}
+  .smoke{position:absolute;left:50%;top:-37px;transform:translateX(-50%);font-size:2rem;opacity:0}
+  .smoke.show{animation:smoke 1.8s ease forwards}
+  @keyframes smoke{0%{opacity:0;transform:translate(-50%,0) scale(.7)}25%{opacity:.45}100%{opacity:0;transform:translate(-50%,-55px) scale(1.6)}}
+  .countdown{font-size:3rem;font-weight:950;color:#db5f87;min-height:56px;margin-top:6px}
+  .blow-note{font-weight:800;color:#8e6977}
+  .heart-burst{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+  .burst{position:absolute;font-size:1.7rem;animation:burst 1.8s ease-out forwards}
+  @keyframes burst{0%{opacity:0;transform:translate(0,0) scale(.4)}15%{opacity:1}100%{opacity:0;transform:translate(var(--x),var(--y)) rotate(30deg) scale(1.5)}}
+  .tiny-footer{margin-top:24px;font-size:.78rem;color:#a58791}
+
+  /* floating decor */
+  .float-decor{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:1}
+  .floating{position:absolute;bottom:-50px;animation:rise linear infinite;opacity:.5}
+  @keyframes rise{to{transform:translateY(-115vh) rotate(20deg);opacity:0}}
+
+  @media (min-width:700px){
+    .card{padding:40px 40px}
+    #game{height:480px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.001ms!important}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="float-decor" id="floatDecor" aria-hidden="true"></div>
+
+  <!-- 1: Welcome -->
+  <section class="screen active" id="s1">
+    <div class="card">
+      <div class="sparkles"><span class="spark">✦</span><span class="spark">♡</span><span class="spark">✦</span><span class="spark">♡</span></div>
+      <span class="eyebrow">🐻 A little birthday surprise</span>
+      <div class="hero-bears">
+        <div class="bear one">🧸</div>
+        <div class="bear two">🧸</div>
+      </div>
+      <h1>Happy Birthday,<br><span class="name">Casey!</span> ♡</h1>
+      <p class="sub">September 20 is officially one of my favorite days.</p>
+      <p>So I made you a tiny world of bears, jokes, games, and one very cheesy message.</p>
+      <button class="btn" onclick="nextScreen(2)">Continue →</button>
+      <div class="tiny-footer">made with love by Loid</div>
+    </div>
+  </section>
+
+  <!-- 2: Jokes -->
+  <section class="screen" id="s2">
+    <div class="card">
+      <span class="eyebrow">🐻 Bear-y important jokes</span>
+      <h2>Okay, Casey... ready?</h2>
+      <p class="sub">Tap the card to flip it and reveal the answer.</p>
+      <div class="progress" id="dots"></div>
+      <div class="joke-stage" onclick="flipJoke()">
+        <div class="joke-card" id="jokeCard">
+          <div class="face">
+            <div class="mini" id="jokeNum">Joke 1 of 5</div>
+            <div style="font-size:3rem;margin:12px">🧸</div>
+            <div id="question" style="font-size:1.18rem;font-weight:800"></div>
+            <div class="hint">tap to flip ↻</div>
+          </div>
+          <div class="face back">
+            <div class="mini">THE VERY SERIOUS ANSWER</div>
+            <div style="font-size:3rem;margin:12px">😝</div>
+            <div class="answer" id="answer"></div>
+            <div class="hint">okay... did you got it right?</div>
+          </div>
+        </div>
+      </div>
+      <button class="btn" id="jokeNext" onclick="nextJoke()">Next joke →</button>
+      <button class="btn secondary" onclick="nextScreen(3)">Skip to the game</button>
+    </div>
+  </section>
+
+  <!-- 3: Game -->
+  <section class="screen" id="s3">
+    <div class="card game-wrap">
+      <span class="eyebrow">🐻 Tiny bear challenge</span>
+      <h2>Catch the Bears!</h2>
+      <p class="sub">Catch 8 bears before the timer reaches zero.</p>
+      <div class="stats">
+        <div class="pill">Caught: <span id="score">0</span>/8</div>
+        <div class="pill">Time: <span id="time">20</span>s</div>
+      </div>
+      <div id="game">
+        <div class="cloud c1">☁️</div><div class="cloud c2">☁️</div>
+      </div>
+      <div class="win-message" id="win">
+        <div style="font-size:2.5rem">🐻💗🐻</div>
+        <h3 style="margin:7px 0">You did it, Casey!</h3>
+        <p>You officially caught all the bears. Now catch this message too...</p>
+        <p><strong>I love you.</strong> Even when I don't always say it out loud, I hope you always remember it.</p>
+        <p>And thank you for still choosing to stick with me, even with the distance between us. Long distance isn't always easy, but having you makes it worth it.</p>
+        <p>Happy 15th birthday, my favorite bear. ♡</p>
+        <button class="btn" onclick="nextScreen(4)">One last surprise →</button>
+      </div>
+      <button class="btn secondary" id="restartGame" onclick="startGame()">Restart game</button>
+    </div>
+  </section>
+
+  <!-- 4: Candle -->
+  <section class="screen" id="s4">
+    <div class="card">
+      <span class="eyebrow">🎂 The final page</span>
+      <h2>Make a wish, Casey.</h2>
+      <p class="sub" id="candleIntro">Your cake is ready. Close your eyes for a second and make a birthday wish.</p>
+
+      <div class="cake-area">
+        <div class="heart-burst" id="heartBurst"></div>
+        <div class="cake">
+          <div class="plate"></div>
+          <div class="candle">
+            <div class="flame" id="flame"></div>
+            <div class="smoke" id="smoke">☁️</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="countdown" id="countdown">♡</div>
+      <div class="blow-note" id="blowNote">When you're ready, press the button and we'll count down together.</div>
+      <button class="btn" id="blowBtn" onclick="blowCandle()">Blow the candle ✨</button>
+
+      <div id="ending" style="display:none">
+        <h2 style="margin-bottom:5px">Happy Birthday, Casey! ♡</h2>
+        <p>You deserve a day full of good things, warm hugs, and the kind of happiness that stays.</p>
+        <p style="font-weight:800;color:#d65c83">— Loid</p>
+        <div style="font-size:2rem;margin-top:8px">🧸 🌸 🎂 💗 ✨</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+const jokes = [
+  {
+    q:"Why did the teddy bear say no to dessert?",
+    a:"Because it was already stuffed! 🐻"
+  },
+  {
+    q:"What do you call a bear with no teeth?",
+    a:"A gummy bear. 😭"
+  },
+  {
+    q:"Why did the bear bring a ladder to the birthday party?",
+    a:"Because the gifts were on a high note. 🎁"
+  },
+  {
+    q:"What did the bear say when it saw you?",
+    a:"'Honey, you're unbearyably cute.' 🐻💗"
+  },
+  {
+    q:"Why is your birthday cake like our relationship?",
+    a:"Sweet, a little cheesy, and somehow I still want another slice. 🎂"
+  }
+];
+
+let jokeIndex = 0;
+let flipped = false;
+let score = 0;
+let timeLeft = 20;
+let gameTimer = null;
+let bearTimer = null;
+let gameRunning = false;
+
+function $(id){return document.getElementById(id)}
+
+function nextScreen(n){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  $("s"+n).classList.add('active');
+  if(n===2) renderJoke();
+  if(n===3) startGame();
+  if(n===4) resetCandle();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function renderJoke(){
+  $("question").textContent=jokes[jokeIndex].q;
+  $("answer").textContent=jokes[jokeIndex].a;
+  $("jokeNum").textContent=`Joke ${jokeIndex+1} of ${jokes.length}`;
+  $("jokeCard").classList.remove('flipped');
+  flipped=false;
+  $("jokeNext").textContent=jokeIndex===jokes.length-1 ? "Continue →" : "Next joke →";
+  $("dots").innerHTML=jokes.map((_,i)=>`<span class="dot ${i===jokeIndex?'on':''}"></span>`).join('');
+}
+
+function flipJoke(){
+  flipped=!flipped;
+  $("jokeCard").classList.toggle('flipped',flipped);
+}
+
+function nextJoke(){
+  if(jokeIndex===jokes.length-1){
+    nextScreen(3);
+    return;
+  }
+  jokeIndex++;
+  renderJoke();
+}
+
+function startGame(){
+  clearInterval(gameTimer);
+  clearInterval(bearTimer);
+  score=0; timeLeft=20; gameRunning=true;
+  $("score").textContent=score;
+  $("time").textContent=timeLeft;
+  $("win").classList.remove('show');
+  $("restartGame").style.display='inline-block';
+  const game=$("game");
+  game.querySelectorAll('.game-bear,.pop').forEach(e=>e.remove());
+
+  spawnBear();
+  bearTimer=setInterval(()=>{
+    if(gameRunning) spawnBear();
+  },900);
+
+  gameTimer=setInterval(()=>{
+    timeLeft--;
+    $("time").textContent=timeLeft;
+    if(timeLeft<=0){
+      endGame(false);
+    }
+  },1000);
+}
+
+function spawnBear(){
+  if(!gameRunning) return;
+  const game=$("game");
+  const b=document.createElement('div');
+  b.className='game-bear';
+  b.textContent=['🧸','🐻','🧸','🐻'][Math.floor(Math.random()*4)];
+  const maxX=Math.max(10,game.clientWidth-65);
+  const maxY=Math.max(10,game.clientHeight-70);
+  b.style.left=(10+Math.random()*(maxX-10))+'px';
+  b.style.top=(35+Math.random()*(maxY-35))+'px';
+  b.style.transform=`rotate(${Math.round(Math.random()*18-9)}deg)`;
+  b.onclick=(e)=>{
+    e.stopPropagation();
+    if(!gameRunning)return;
+    score++;
+    $("score").textContent=score;
+    const r=b.getBoundingClientRect(), gr=game.getBoundingClientRect();
+    const pop=document.createElement('div');
+    pop.className='pop'; pop.textContent='♡ caught!';
+    pop.style.left=(r.left-gr.left)+'px';
+    pop.style.top=(r.top-gr.top)+'px';
+    game.appendChild(pop);
+    b.remove();
+    if(score>=8) endGame(true);
+  };
+  game.appendChild(b);
+  setTimeout(()=>b.remove(),580);
+}
+
+function endGame(won){
+  if(!gameRunning)return;
+  gameRunning=false;
+  clearInterval(gameTimer); clearInterval(bearTimer);
+  $("game").querySelectorAll('.game-bear').forEach(e=>e.remove());
+  $("restartGame").style.display=won?'none':'inline-block';
+  if(won) $("win").classList.add('show');
+  else{
+    $("win").classList.add('show');
+    $("win").innerHTML=`
+      <div style="font-size:2.5rem">🐻💨</div>
+      <h3 style="margin:7px 0">The bears escaped!</h3>
+      <p>But don't worry. Your birthday is still a win. ♡</p>
+      <button class="btn" onclick="startGame()">Try again →</button>`;
+  }
+}
+
+function resetCandle(){
+  $("flame").classList.remove('out');
+  $("smoke").classList.remove('show');
+  $("countdown").textContent='♡';
+  $("blowNote").textContent="When you're ready, press the button and we'll count down together.";
+  $("blowBtn").style.display='inline-block';
+  $("ending").style.display='none';
+}
+
+function blowCandle(){
+  const btn=$("blowBtn");
+  btn.disabled=true;
+  btn.style.opacity=.55;
+  let n=3;
+  $("countdown").textContent=n;
+  const t=setInterval(()=>{
+    n--;
+    $("countdown").textContent=n>0?n:"";
+    if(n<=0){
+      clearInterval(t);
+      $("blowNote").textContent="*whoooosh* 💨";
+      $("flame").classList.add('out');
+      $("smoke").classList.add('show');
+      createBurst();
+      setTimeout(()=>{
+        $("blowBtn").style.display='none';
+        $("ending").style.display='block';
+        $("candleIntro").textContent="Wish made. Candle blown. Birthday officially upgraded. ✨";
+      },900);
+    }
+  },850);
+}
+
+function createBurst(){
+  const wrap=$("heartBurst");
+  wrap.innerHTML='';
+  const pieces=['♡','♥','✦','✨','🧸'];
+  for(let i=0;i<34;i++){
+    const el=document.createElement('div');
+    el.className='burst';
+    el.textContent=pieces[Math.floor(Math.random()*pieces.length)];
+    el.style.left=(50+Math.random()*8-4)+'%';
+    el.style.top=(45+Math.random()*8-4)+'%';
+    el.style.setProperty('--x',(Math.random()*520-260)+'px');
+    el.style.setProperty('--y',(Math.random()*440-220)+'px');
+    el.style.animationDelay=(Math.random()*.3)+'s';
+    wrap.appendChild(el);
+  }
+}
+
+function createFloating(){
+  const wrap=$("floatDecor");
+  const chars=['♡','✦','🐻','🌸'];
+  for(let i=0;i<18;i++){
+    const el=document.createElement('div');
+    el.className='floating';
+    el.textContent=chars[Math.floor(Math.random()*chars.length)];
+    el.style.left=Math.random()*100+'%';
+    el.style.fontSize=(12+Math.random()*20)+'px';
+    el.style.animationDuration=(8+Math.random()*10)+'s';
+    el.style.animationDelay=(-Math.random()*12)+'s';
+    wrap.appendChild(el);
+  }
+}
+createFloating();
+renderJoke();
+</script>
+</body>
+</html>
